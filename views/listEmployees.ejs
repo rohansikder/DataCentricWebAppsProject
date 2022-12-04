@@ -1,0 +1,42 @@
+<style>
+    table,
+    th,
+    td {
+        border: 2px solid black;
+        border-collapse: separate;
+    }
+</style>
+
+<table>
+    <h1>Employees</h1>
+    <br></br>
+    <th>Employee ID</th>
+    <th>Name</th>
+    <th>Role</th>
+    <th>Salary</th>
+
+    </tr>
+    <% employeeList.forEach((employeeList)=>
+        { %>
+        <tr>
+            <td>
+                <%= employeeList.eid %>
+            </td>
+            <td>
+                <%= employeeList.ename %>
+            </td>
+            <td>
+                <%= employeeList.role %>
+            </td>
+            <td>
+                <%= employeeList.salary %>
+            </td>
+        </tr>
+        <% }) %>
+</table>
+
+<p></p>
+
+<button onclick="window.location.href='http://localhost:3004/';">
+    Home
+</button>

@@ -33,7 +33,7 @@ CREATE TABLE `dept` (
   PRIMARY KEY (`did`),
   KEY `lid` (`lid`),
   CONSTRAINT `dept_ibfk_1` FOREIGN KEY (`lid`) REFERENCES `location` (`lid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `emp_dept` (
   KEY `did` (`did`),
   CONSTRAINT `emp_dept_ibfk_1` FOREIGN KEY (`eid`) REFERENCES `employee` (`eid`),
   CONSTRAINT `emp_dept_ibfk_2` FOREIGN KEY (`did`) REFERENCES `dept` (`did`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `employee` (
   `role` enum('Manager','Employee') DEFAULT NULL,
   `salary` double(8,2) DEFAULT NULL,
   PRIMARY KEY (`eid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +110,7 @@ CREATE TABLE `location` (
   `lid` varchar(5) NOT NULL,
   `county` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`lid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
