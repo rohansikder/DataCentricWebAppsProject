@@ -14,6 +14,7 @@
     <th>Name</th>
     <th>Location</th>
     <th>Budget</th>
+    <th>Delete</th>
 
     </tr>
     <% departmentList.forEach((departmentList)=>
@@ -30,6 +31,11 @@
             </td>
             <td>
                 <%= departmentList.budget %>
+            </td>
+            <td>
+                <a href="/department/delete/<%= departmentList.did %>">
+                    <p type="submit">Delete</p>
+                </a>
             </td>
         </tr>
         <% }) %>

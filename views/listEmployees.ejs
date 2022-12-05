@@ -14,6 +14,7 @@
     <th>Name</th>
     <th>Role</th>
     <th>Salary</th>
+    <th>Update</th>
 
     </tr>
     <% employeeList.forEach((employeeList)=>
@@ -31,11 +32,16 @@
             <td>
                 <%= employeeList.salary %>
             </td>
+            <td>
+                <a href="/employees/edit/<%= employeeList.eid %>">
+                    <p type="submit">Update</p>
+                </a>
+            </td>
         </tr>
         <% }) %>
 </table>
 
-<p></p>
+<br>
 
 <button onclick="window.location.href='http://localhost:3004/';">
     Home
