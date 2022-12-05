@@ -15,7 +15,7 @@ mysql.createPool({
         console.log(error)
     })
 
-//Gets all departments
+//Gets all Departments
 var getDepartments = function () {
     return new Promise((resolve, reject) => {
         pool.query('select * from dept')
@@ -28,6 +28,7 @@ var getDepartments = function () {
     })
 }
 
+//Gets all Employees
 var getEmployees = function () {
     return new Promise((resolve, reject) => {
         pool.query('select * from employee')
@@ -40,6 +41,7 @@ var getEmployees = function () {
     })
 }
 
+//Chooses employee to populate form to edit details
 var updateEmployee = function (eid) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
@@ -57,6 +59,7 @@ var updateEmployee = function (eid) {
     })
 }
 
+//Edits employee data which user has entered
 var updateEmployeeData = function (eid, ename, role, salary) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
@@ -74,6 +77,7 @@ var updateEmployeeData = function (eid, ename, role, salary) {
     })
 }
 
+//Deletes department by the did
 var deleteDepartment = function (did) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
@@ -91,5 +95,5 @@ var deleteDepartment = function (did) {
     })
 }
 
-
+//Exporting all functions
 module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment };

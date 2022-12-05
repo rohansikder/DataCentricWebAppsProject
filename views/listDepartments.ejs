@@ -17,6 +17,7 @@
     <th>Delete</th>
 
     </tr>
+    <!--Loops over all departments and displays them-->
     <% departmentList.forEach((departmentList)=>
         { %>
         <tr>
@@ -33,6 +34,7 @@
                 <%= departmentList.budget %>
             </td>
             <td>
+                <!--Does a get request including department id-->
                 <a href="/department/delete/<%= departmentList.did %>">
                     <p type="submit">Delete</p>
                 </a>

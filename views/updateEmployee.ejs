@@ -1,24 +1,31 @@
 <body>
     <h1>Edit Employee</h1>
-    <p>Name must be 5 Characters</p>
-    <p>Salary cannot be less than zero.</p>
-</body>
 
+    <ul>
+        <li>Name must be 5 Characters.</li>
+        <li>Salary cannot be less than zero.</li>
+        <li>Role should be Manager or Employee.</li>
+    </ul>
+
+</body>
+<!--A form that gets employee info with a get request to populate form and then does a post to return all new info-->
 <form href="http://localhost:3004/employees/edit/<%= updateEmployee[0].eid %>" method="POST">
     <b><label>Employee ID:</label></b>
-    <input type="text" readonly="true" name="eid" value="<%= updateEmployee[0].eid%>"></input><br>
+    <input type="text" readonly="true" name="eid" value="<%= updateEmployee[0].eid%>" required></input>
     <b><label>Employee Name:</label></b>
-    <input type="text" name="ename" value="<%= updateEmployee[0].ename %>"></input><br>
+    <input type="text" name="ename" value="<%= updateEmployee[0].ename %>" required></input>
     <b><label>Role:</label></b>
-    <input type="text" name="role" value="<%= updateEmployee[0].role %>"></input><br>
+    <input type="text" name="role" value="<%= updateEmployee[0].role %>" required></input>
     <b><label>Salary:</label></b>
-    <input type="number" name="salary" value="<%= updateEmployee[0].salary %>"></input><br>
-    <br>
+    <input type="number" name="salary" value="<%= updateEmployee[0].salary %>" required></input>
     <input type="submit" value="Update">
 </form>
 
 <p></p>
-
 <button onclick="window.location.href='http://localhost:3004/';">
     Home
+</button>
+<p></p>
+<button onclick="window.location.href='http://localhost:3004/employees';">
+    Employees
 </button>

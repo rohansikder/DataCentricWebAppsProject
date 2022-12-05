@@ -17,6 +17,7 @@
     <th>Update</th>
 
     </tr>
+    <!--Loops over all employees and displays them-->
     <% employeeList.forEach((employeeList)=>
         { %>
         <tr>
@@ -33,6 +34,7 @@
                 <%= employeeList.salary %>
             </td>
             <td>
+                <!--Does a get request including employee id-->
                 <a href="/employees/edit/<%= employeeList.eid %>">
                     <p type="submit">Update</p>
                 </a>
