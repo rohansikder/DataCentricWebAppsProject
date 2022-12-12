@@ -1,0 +1,39 @@
+<style>
+    table,
+    th,
+    td {
+        border: 2px solid black;
+        border-collapse: separate;
+    }
+</style>
+
+
+<table>
+    <h1>Employees (MongoDB)</h1>
+
+    <a href="http://localhost:3004/employeesMongoDB/add"><button type="submit" value="Add Employee">Add Employee</button></a>
+    <p></p>
+    <th>Employee ID</th>
+    <th>Phone Number</th>
+    <th>Email</th>
+
+    </tr>
+    <% employeesList.forEach((employeesList)=>
+        { %>
+        <tr>
+            <td>
+                <%= employeesList._id %>
+            </td>
+            <td>
+                <%= employeesList.phone %>
+            </td>
+            <td>
+                <%= employeesList.email %>
+            </td>
+        </tr>
+        <% }) %>
+</table>
+<p></p>
+<button onclick="window.location.href='http://localhost:3004/';">
+    Home
+</button>

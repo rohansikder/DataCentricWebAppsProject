@@ -5,6 +5,7 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 var mySqlDAO = require('./mySqlDAO');
+var mongoDBDAO = require('./mongoDBDAO');
 
 //http://localhost:3004/
 app.get('/', (req, res) => {
@@ -90,9 +91,35 @@ app.get('/department/delete/:did', (req, res) => {
         })
 })
 
-//http://localhost:3004/employeesMongoDB
+//http://localhost:3004/employeesMongoDB - Shows all employees
 app.get('/employeesMongoDB', (req, res) => {
-    res.send("EmployeesMongoDB")
+    mongoDBDAO.getEmployeesMongoDB()
+        .then((data) => {
+            res.render('listEmployeesMongoDB', { employeesList: data })
+        })
+        .catch(() => {
+            res.send('error')
+        })
+})
+
+//http://localhost:3004/employeesMongoDB/add - Goes to addEmployee ejs page
+app.get('/employeesMongoDB/add', (req, res) => {
+    res.render("addEmployee")
+})
+
+//Post request to get addEmployee data
+app.post('/employeesMongoDB/add', (req, res) => {
+    mongoDBDAO.addEmployees(req.body._id, req.body.phone, req.body.email)
+        .then((result) => {
+            res.redirect("employeesMongoDB")
+        })
+        .catch((error) => {
+            if (error.message.includes("11000")) {
+                res.send("<h1>_ID: " + req.body._id + " already exists</h1>" + "<a href='/'>Home</a>")
+            } else {
+                res.send(error.message)
+            }
+        })
 })
 
 app.listen(3004, () => {
