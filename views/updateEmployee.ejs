@@ -2,9 +2,10 @@
     <h1>Edit Employee</h1>
 
     <ul>
-        <li>Name must be 5 Characters.</li>
-        <li>Salary cannot be less than zero.</li>
-        <li>Role should be Manager or Employee.</li>
+        <li>Employee ID is not editable</li><!--Works-->
+        <li>Name must be 5 Characters.</li><!--Works-->
+        <li>Salary cannot be less than zero.</li><!--Works-->
+        <li>Role should be Manager or Employee.</li><!--Works-->
     </ul>
 
 </body>
@@ -13,11 +14,15 @@
     <b><label>Employee ID:</label></b>
     <input type="text" readonly="true" name="eid" value="<%= updateEmployee[0].eid%>" required></input>
     <b><label>Employee Name:</label></b>
-    <input type="text" name="ename" value="<%= updateEmployee[0].ename %>" required></input>
-    <b><label>Role:</label></b>
-    <input type="text" name="role" value="<%= updateEmployee[0].role %>" required></input>
+    <input type="text" name="ename" value="<%= updateEmployee[0].ename %>" minlength="5" required></input>
+    <b><label for="role">Role:</label></b>
+    <select id="role" name="role" required>
+        <option value="<%= updateEmployee[0].role %>"><%= updateEmployee[0].role %></option>
+        <option value="Manager">Manager</option>
+        <option value="Employee">Employee</option>
+    </select>
     <b><label>Salary:</label></b>
-    <input type="number" name="salary" value="<%= updateEmployee[0].salary %>" required></input>
+    <input type="number" name="salary" value="<%= updateEmployee[0].salary %>" min="1" step=".01" required></input>
     <input type="submit" value="Update">
 </form>
 

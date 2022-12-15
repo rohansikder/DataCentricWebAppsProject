@@ -16,6 +16,7 @@
     <th>Employee ID</th>
     <th>Phone Number</th>
     <th>Email</th>
+    <th>Delete</th>
 
     </tr>
     <% employeesList.forEach((employeesList)=>
@@ -29,6 +30,12 @@
             </td>
             <td>
                 <%= employeesList.email %>
+            </td>
+            <td>
+                <!--Does a get request including department id-->
+                <a href="/employeesMongoDB/delete/<%= employeesList._id %>">
+                    <p type="submit">Delete</p>
+                </a>
             </td>
         </tr>
         <% }) %>

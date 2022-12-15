@@ -1,10 +1,17 @@
 <body>
     <h1>Add Employee</h1>
+
+    <ul>
+        <li>Employee ID must be 4 Characters.</li><!--Works-->
+        <li>Phone Number must be greater than 5 Numbers.</li><!--Works-->
+        <li>Valid Email is Required.</li><!--Works-->
+    </ul>
+
     <form action="/employeesMongoDB/add" method="POST">
         <label>Employee ID:</label>
-        <input type="text" name="_id" required><br>
+        <input type="text" name="_id" minlength="4" maxlength="4" required><br>
         <label>Phone Number:</label>
-        <input type="number" name="phone" required><br>
+        <input type="number" name="phone" min="9999" required><br>
         <label>Email:</label>
         <input type="email" name="email" required><br>
         <p></p>

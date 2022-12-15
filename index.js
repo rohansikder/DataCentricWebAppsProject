@@ -42,19 +42,10 @@ app.get('/employees/edit/:eid', (req, res) => {
 app.post('/employees/edit/:eid', (req, res) => {
     mySqlDAO.updateEmployeeData(req.body.eid, req.body.ename, req.body.role, req.body.salary)
         .then((result) => {
-            res.render('updateEmployee', { updateEmployee: result })
+            res.redirect("/employees")
         })
         .catch((error) => {
             console.log(error)
-        })
-    //Updates employee details
-    mySqlDAO.updateEmployee(req.params.eid)
-        .then((result) => {
-            res.render('updateEmployee', { updateEmployee: result })
-        })
-        .catch((error) => {
-            console.log(error)
-
         })
 })
 
@@ -111,7 +102,7 @@ app.get('/employeesMongoDB/add', (req, res) => {
 app.post('/employeesMongoDB/add', (req, res) => {
     mongoDBDAO.addEmployees(req.body._id, req.body.phone, req.body.email)
         .then((result) => {
-            res.redirect("employeesMongoDB")
+            res.redirect("/employeesMongoDB")
         })
         .catch((error) => {
             if (error.message.includes("11000")) {
@@ -120,6 +111,18 @@ app.post('/employeesMongoDB/add', (req, res) => {
                 res.send(error.message)
             }
         })
+})
+
+//goes to /employeesMongoDB/delete/:_id and then sends _id to deleteEmployees function which deletes employee
+app.get('/employeesMongoDB/delete/:_id', (req, res) => {
+    mongoDBDAO.deleteEmployees(req.params._id) 
+    .then((result) => {
+        res.redirect("/employeesMongoDB")
+        //console.log(result)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 })
 
 app.listen(3004, () => {
