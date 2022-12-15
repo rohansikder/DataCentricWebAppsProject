@@ -95,5 +95,21 @@ var deleteDepartment = function (did) {
     })
 }
 
+var checkEmployeeID = function (eid){
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'select * from employee where eid like ?',
+            values: [eid]
+        }
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
 //Exporting all functions
-module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment };
+module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID};

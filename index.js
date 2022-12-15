@@ -100,17 +100,31 @@ app.get('/employeesMongoDB/add', (req, res) => {
 
 //Post request to get addEmployee data
 app.post('/employeesMongoDB/add', (req, res) => {
-    mongoDBDAO.addEmployees(req.body._id, req.body.phone, req.body.email)
-        .then((result) => {
-            res.redirect("/employeesMongoDB")
-        })
-        .catch((error) => {
-            if (error.message.includes("11000")) {
-                res.send("<h1>_ID: " + req.body._id + " already exists</h1>" + "<a href='/'>Home</a>")
-            } else {
-                res.send(error.message)
-            }
-        })
+    //Checks if employee exists in mySql Database
+    mySqlDAO.checkEmployeeID(req.body._id).then((result) => {
+        //console.log(result[0])
+        //If the result is not null means there is a id that matches
+        if (result[0] != null) {
+            //Adds employee to mongoDB
+            mongoDBDAO.addEmployees(req.body._id, req.body.phone, req.body.email)
+            .then((result) => {
+                res.redirect("/employeesMongoDB")
+            })
+            .catch((error) => {
+                if (error.message.includes("11000")) {
+                    res.send("<h1>_ID: " + req.body._id + " already exists</h1>" + "<a href='/'>Home</a>")
+                } else {
+                    res.send(error.message)
+                }
+            })
+        //That ID does not exist
+        }else{
+            res.send("<h1>Employee: " + req.body._id + " doesn't in mySQL</h1>" + "<a href='/'>Home</a>")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 })
 
 //goes to /employeesMongoDB/delete/:_id and then sends _id to deleteEmployees function which deletes employee
