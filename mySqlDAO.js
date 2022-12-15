@@ -28,10 +28,59 @@ var getDepartments = function () {
     })
 }
 
-//Gets all Employees
+//Gets all Locations
 var getEmployees = function () {
     return new Promise((resolve, reject) => {
         pool.query('select * from employee')
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Gets all Employees
+var getLocations = function () {
+    return new Promise((resolve, reject) => {
+        pool.query('select * from location')
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Adds new location
+var addLocation = function(lid, county){
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'INSERT INTO location (lid, county) values (?,?)',
+            values: [lid, county]
+        }
+
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Deletes location by the lid
+var deleteLocation = function (lid) {
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'delete from location where lid = ?',
+            values: [lid]
+        }
+
+        pool.query(mySqlQuery)
             .then((data) => {
                 resolve(data)
             })
@@ -95,6 +144,7 @@ var deleteDepartment = function (did) {
     })
 }
 
+//Checks if employee exists
 var checkEmployeeID = function (eid){
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
@@ -112,4 +162,4 @@ var checkEmployeeID = function (eid){
 }
 
 //Exporting all functions
-module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID};
+module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation};

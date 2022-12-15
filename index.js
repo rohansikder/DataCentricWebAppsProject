@@ -4,10 +4,11 @@ var ejs = require('ejs');
 var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
+//Importing functions by Data Access Object 
 var mySqlDAO = require('./mySqlDAO');
 var mongoDBDAO = require('./mongoDBDAO');
 
-//http://localhost:3004/
+//http://localhost:3004/ - This goes to home page
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/home.html')
 })
@@ -45,6 +46,59 @@ app.post('/employees/edit/:eid', (req, res) => {
             res.redirect("/employees")
         })
         .catch((error) => {
+            console.log(error)
+        })
+})
+
+//http://localhost:3004/locations - Gets all locations and lists in listLocations.ejs
+app.get('/location', (req, res) => {
+    mySqlDAO.getLocations()
+        .then((result) => {
+            res.render('listLocations', { locationList: result })
+        })
+        .catch((error) => {
+            res.send(error)
+        })
+})
+
+//http://localhost:3004/location/add - Goes to addLocation ejs page
+app.get('/location/add', (req, res) => {
+    res.render("addLocation")
+})
+
+//Post request to get addLocation data
+app.post('/location/add', (req, res) => {
+            mySqlDAO.addLocation(req.body.lid, req.body.county)
+            .then((result) => {
+                res.redirect("/location")
+            })
+            .catch((error) => {
+                console.log(error)
+                if (error.errno == 1062) {
+                    res.send("<h1>Location: " + req.body.lid + " already exists</h1>" + "<a href='/'>Home</a>")
+                } else {
+                    res.send(error.message)
+                }
+            })
+})
+
+//Deletes Location
+app.get('/location/delete/:lid', (req, res) => {
+    mySqlDAO.deleteLocation(req.params.lid)
+        .then((result) => {
+            //Checks what happens in mySql
+            //Id rows are affected then location has been deleted
+            if (result.affectedRows == 0) {
+                res.send("<h2> Location: " + req.params.lid + " can't be deleted.</h2>" + "<a href='/'>Home</a>")
+            } else {
+                res.send("<h2> Location: " + req.params.lid + " Deleted.</h2>" + "<a href='/'>Home</a>")
+            }
+        })
+        .catch((error) => {
+            //If an ER_ROW_IS_REFERENCED_2 error occurs means that there is a employee referencing that particular dept 
+            if (error.code == "ER_ROW_IS_REFERENCED_2") {
+                res.send("<h2>Location ID: " + req.params.lid + " cannot be deleted as there a department in this location.</h2>" + "<a href='/'>Home</a>")
+            }
             console.log(error)
         })
 })

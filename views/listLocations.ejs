@@ -1,0 +1,42 @@
+<style>
+    table,
+    th,
+    td {
+        border: 2px solid black;
+        border-collapse: separate;
+    }
+</style>
+
+<table>
+    <h1>Locations</h1>
+    <th>Location ID</th>
+    <th>County</th>
+    <th>Delete</th>
+    <a href="http://localhost:3004/location/add"><button type="submit" value="Add Location">Add Location</button></a>
+    <p></p>
+    </tr>
+    <!--Loops over all employees and displays them-->
+    <% locationList.forEach((locationList)=>
+        { %>
+        <tr>
+            <td>
+                <%= locationList.lid %>
+            </td>
+            <td>
+                <%= locationList.county %>
+            </td>
+            <td>
+                <!--Does a get request including location id-->
+                <a href="/location/delete/<%= locationList.lid %>">
+                    <p type="submit">Delete</p>
+                </a>
+            </td>
+        </tr>
+        <% }) %>
+</table>
+
+<br>
+
+<button onclick="window.location.href='http://localhost:3004/';">
+    Home
+</button>

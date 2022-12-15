@@ -1,0 +1,26 @@
+<body>
+    <h1>Add Location</h1>
+
+    <ul>
+        <li>Location ID must be 3 Characters.</li><!--Works-->
+        <li>Must enter county.</li><!--Works-->
+    </ul>
+
+    <form action="/location/add" method="POST">
+        <label>Location ID:</label>
+        <input type="text" name="lid" minlength="3" maxlength="3" required>
+        <label>County:</label>
+        <input type="text" name="county" required>
+        <input type="submit" value="Submit">
+    </form>
+
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/';">
+        Home
+    </button>
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/location';">
+        List of Locations
+    </button>
+
+</body>
