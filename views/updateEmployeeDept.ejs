@@ -8,7 +8,9 @@
     </ul>
 
 </body>
+
 <!--A form that gets employee info with a get request to populate form and then does a post to return all new info-->
+<!--Form has all input validation-->
 <form href="http://localhost:3004/employeeDepartment/update/<%= updateEmployeeDept[0].eid %>" method="POST">
     <b><label>Employee ID:</label></b>
     <input type="text" readonly="true" name="eid" value="<%= updateEmployeeDept[0].eid%>" required></input>

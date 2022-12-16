@@ -10,6 +10,7 @@ var mongoDBDAO = require('./mongoDBDAO');
 
 //http://localhost:3004/ - This goes to home page
 app.get('/', (req, res) => {
+    //Sends to home page
     res.sendFile(__dirname + '/views/home.html')
 })
 
@@ -24,7 +25,7 @@ app.get('/employees', (req, res) => {
         })
 })
 
-//Gets updateEmployee EJS
+//http://localhost:3004/employees/edit/:eid - Gets updateEmployee EJS
 app.get('/employees/edit/:eid', (req, res) => {
     //Populates form with employee details
     mySqlDAO.updateEmployee(req.params.eid)
@@ -39,7 +40,7 @@ app.get('/employees/edit/:eid', (req, res) => {
         })
 })
 
-//Updates mySQL data
+//Updates employee mySQL with edited data
 app.post('/employees/edit/:eid', (req, res) => {
     mySqlDAO.updateEmployeeData(req.body.eid, req.body.ename, req.body.role, req.body.salary)
         .then((result) => {
@@ -78,7 +79,7 @@ app.post('/employees/add', (req, res) => {
     })
 })
 
-//http://localhost:3004/locations - Gets all locations and lists in listLocations.ejs
+//http://localhost:3004/location - Gets all locations and lists in listLocations.ejs
 app.get('/location', (req, res) => {
     mySqlDAO.getLocations()
         .then((result) => {
@@ -94,7 +95,7 @@ app.get('/location/add', (req, res) => {
     res.render("addLocation")
 })
 
-//Post request to get addLocation data
+//Post request to send add location to mySQL
 app.post('/location/add', (req, res) => {
             mySqlDAO.addLocation(req.body.lid, req.body.county)
             .then((result) => {
@@ -110,7 +111,7 @@ app.post('/location/add', (req, res) => {
             })
 })
 
-//Deletes Location
+//Deletes Location by using location id
 app.get('/location/delete/:lid', (req, res) => {
     mySqlDAO.deleteLocation(req.params.lid)
         .then((result) => {
@@ -162,6 +163,7 @@ app.post('/employeeDepartment/update/:eid', (req, res) => {
         })
         .catch((error) => {
             //console.log(error)
+            //Checks if Department exists
             if (error.code == "ER_NO_REFERENCED_ROW_2") {
                 res.send("<h1>Department: " + req.body.did + " does not exist!</h1>" + "<a href='/'>Home</a>")
             } else {
@@ -181,7 +183,7 @@ app.get('/department', (req, res) => {
         })
 })
 
-//http://localhost:3004/department/add - Goes to page where you can add page
+//http://localhost:3004/department/add - Goes to page where you can add department
 app.get('/department/add', (req, res) => {
     res.render("addDepartment")
 })
@@ -198,6 +200,7 @@ app.post('/department/add', (req, res) => {
             })
             .catch((error) => {
                 console.log(error)
+                //If department ID exists
                 if (error.message.includes("11000")) {
                     res.send("<h1>_ID: " + req.body.did + " already exists</h1>" + "<a href='/'>Home</a>")
                 } else {
@@ -205,6 +208,7 @@ app.post('/department/add', (req, res) => {
                 }
             })
         }else{
+            //If Location id does not exist
             res.send("<h1>Location: " + req.body.lid + " doesn't in mySQL</h1>" + "<a href='/'>Home</a>")
         }
 
@@ -214,7 +218,7 @@ app.post('/department/add', (req, res) => {
     })
 })
 
-//Deletes Department
+//Deletes Department using the department id
 app.get('/department/delete/:did', (req, res) => {
     // insert into dept (did,dname,lid,budget) values ("FIN", "Finance","GAL","1000000");
     mySqlDAO.deleteDepartment(req.params.did)
@@ -252,7 +256,7 @@ app.get('/employeesMongoDB/add', (req, res) => {
     res.render("addEmployee")
 })
 
-//Post request to get addEmployee data
+//Post request to get addEmployee data and then enters into mongoDB
 app.post('/employeesMongoDB/add', (req, res) => {
     //Checks if employee exists in mySql Database
     mySqlDAO.checkEmployeeID(req.body._id).then((result) => {

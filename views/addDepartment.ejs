@@ -8,6 +8,7 @@
         <li>Minimum budget of 1000 is required.</li><!--Works-->
     </ul>
 
+    <!--Form has all input validation-->
     <form action="/department/add" method="POST">
         <label>Department ID:</label>
         <input type="text" name="did" minlength="3" maxlength="3" required>
@@ -18,7 +19,6 @@
         <label>Budget:</label>
         <input type="number" name="budget" min="1000" required>
         <input type="submit" value="Submit">
-
     </form>
 
     <p></p>

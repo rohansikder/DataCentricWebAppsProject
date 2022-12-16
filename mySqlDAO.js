@@ -158,7 +158,7 @@ var updateEmployee = function (eid) {
     })
 }
 
-//Edits employee data which user has entered
+//updates employee data which user has entered
 var updateEmployeeData = function (eid, ename, role, salary) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
@@ -176,7 +176,7 @@ var updateEmployeeData = function (eid, ename, role, salary) {
     })
 }
 
-//Edits employee dept which user has entered
+//updates employee dept which user has entered
 var updateEmployeeDeptData = function (eid, did) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
