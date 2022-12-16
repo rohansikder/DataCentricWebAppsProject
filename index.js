@@ -126,7 +126,7 @@ app.get('/employeeDepartment/update/:eid', (req, res) => {
         })
 })
 
-//Updates mySQL data
+//Updates employeeDepartment data 
 app.post('/employeeDepartment/update/:eid', (req, res) => {
     mySqlDAO.updateEmployeeDeptData(req.body.eid, req.body.did)
         .then((result) => {
@@ -151,6 +151,39 @@ app.get('/department', (req, res) => {
         .catch((error) => {
             res.send(error)
         })
+})
+
+//http://localhost:3004/department/add - Goes to page where you can add page
+app.get('/department/add', (req, res) => {
+    res.render("addDepartment")
+})
+
+//http://localhost:3004/department/add post request to add to database
+app.post('/department/add', (req, res) => {
+    mySqlDAO.checkLocationID(req.body.lid).then((result) => {
+        //Checks if locationID exists
+        if (result[0] != null) {
+            //Then adds department
+            mySqlDAO.addDepartment(req.body.did, req.body.name, req.body.lid, req.body.budget)
+            .then((result) => {
+                res.redirect("/department")
+            })
+            .catch((error) => {
+                console.log(error)
+                if (error.message.includes("11000")) {
+                    res.send("<h1>_ID: " + req.body.did + " already exists</h1>" + "<a href='/'>Home</a>")
+                } else {
+                    res.send(error.message)
+                }
+            })
+        }else{
+            res.send("<h1>Location: " + req.body.lid + " doesn't in mySQL</h1>" + "<a href='/'>Home</a>")
+        }
+
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 })
 
 //Deletes Department

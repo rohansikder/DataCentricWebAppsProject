@@ -1,0 +1,33 @@
+<body>
+    <h1>Add Department</h1>
+
+    <ul>
+        <li>Department ID must be 3 Characters.</li><!--Works-->
+        <li>Name must be at least 4 Characters</li><!--Works-->
+        <li>Valid Location is Required.</li><!--Works-->
+        <li>Minimum budget of 1000 is required.</li><!--Works-->
+    </ul>
+
+    <form action="/department/add" method="POST">
+        <label>Department ID:</label>
+        <input type="text" name="did" minlength="3" maxlength="3" required>
+        <label>Department Name:</label>
+        <input type="text" name="name" minlength="4" required>
+        <label>Location ID:</label>
+        <input type="text" name="lid" required>
+        <label>Budget:</label>
+        <input type="number" name="budget" min="1000" required>
+        <input type="submit" value="Submit">
+
+    </form>
+
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/';">
+        Home
+    </button>
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/department';">
+        Departments
+    </button>
+
+</body>

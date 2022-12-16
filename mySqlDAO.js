@@ -176,13 +176,30 @@ var updateEmployeeDeptData = function (eid, did) {
     })
 }
 
-
 //Deletes department by the did
 var deleteDepartment = function (did) {
     return new Promise((resolve, reject) => {
         var mySqlQuery = {
             sql: 'delete from dept where did = ?',
             values: [did]
+        }
+
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Adds new department
+var addDepartment = function(did, dname, lid, budget){
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'INSERT INTO dept (did, dname, lid, budget) values (?,?,?,?)',
+            values: [did, dname, lid, budget]
         }
 
         pool.query(mySqlQuery)
@@ -212,5 +229,22 @@ var checkEmployeeID = function (eid){
     })
 }
 
+//Checks if employee exists
+var checkLocationID = function (lid){
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'select * from location where lid like ?',
+            values: [lid]
+        }
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
 //Exporting all functions
-module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation, getEmployeeDept, updateEmployeeDept, updateEmployeeDeptData};
+module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation, getEmployeeDept, updateEmployeeDept, updateEmployeeDeptData, checkLocationID, addDepartment};
