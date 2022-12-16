@@ -50,6 +50,34 @@ app.post('/employees/edit/:eid', (req, res) => {
         })
 })
 
+//Gets addEmployeeSQL EJS
+app.get('/employees/add', (req, res) => {
+    res.render('addEmployeeSQL')
+})
+
+//POST Request to send add new employee to mysql
+app.post('/employees/add', (req, res) => {
+    //Checks if employeeID is already being used
+    mySqlDAO.checkEmployeeID(req.body.eid).then((result) => {
+        //console.log(result)
+        if (result[0] == null) {
+            //Then adds department
+            mySqlDAO.addEmployee(req.body.eid, req.body.ename, req.body.role, req.body.salary)
+            .then((result) => {
+                res.redirect("/employees")
+            })
+            .catch((error) => {
+                //console.log(error)
+            })
+        }else{
+            res.send("<h1>Employee ID: " + req.body.eid + " already exists</h1>" + "<a href='/'>Home</a>")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+})
+
 //http://localhost:3004/locations - Gets all locations and lists in listLocations.ejs
 app.get('/location', (req, res) => {
     mySqlDAO.getLocations()

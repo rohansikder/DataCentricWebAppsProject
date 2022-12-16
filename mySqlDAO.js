@@ -42,6 +42,24 @@ var getEmployees = function () {
     })
 }
 
+//Adds new employee
+var addEmployee = function(eid, ename, role, salary){
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'INSERT INTO employee (eid, ename, role, salary) values (?,?,?,?)',
+            values: [eid, ename, role, salary]
+        }
+
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
 //Gets all Locations
 var getLocations = function () {
     return new Promise((resolve, reject) => {
@@ -247,4 +265,4 @@ var checkLocationID = function (lid){
 }
 
 //Exporting all functions
-module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation, getEmployeeDept, updateEmployeeDept, updateEmployeeDeptData, checkLocationID, addDepartment};
+module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation, getEmployeeDept, updateEmployeeDept, updateEmployeeDeptData, checkLocationID, addDepartment, addEmployee};

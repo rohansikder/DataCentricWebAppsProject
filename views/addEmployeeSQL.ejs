@@ -1,0 +1,35 @@
+<body>
+    <h1>Add Employee</h1>
+
+    <ul>
+        <li>Employee ID must be 4 Characters and must be Unique.</li><!--Works-->
+        <li>Name must be at least 5 Characters</li><!--Works-->
+        <li>Salary cannot be less than one.</li><!--Works-->
+        <li>Role should be Manager or Employee.</li><!--Works-->
+    </ul>
+
+    <form action="/employees/add" method="POST">
+        <b><label>Employee ID:</label></b>
+        <input type="text" name="eid" minlength="4" maxlength="4" required></input>
+        <b><label>Employee Name:</label></b>
+        <input type="text" name="ename" minlength="5" required></input>
+        <b><label for="role">Role:</label></b>
+        <select id="role" name="role" required>
+            <option value="Manager">Manager</option>
+            <option value="Employee">Employee</option>
+        </select>
+        <b><label>Salary:</label></b>
+        <input type="number" name="salary" min="1" step=".01" required></input>
+        <input type="submit" value="Submit">
+    </form>
+
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/';">
+        Home
+    </button>
+    <p></p>
+    <button onclick="window.location.href='http://localhost:3004/employees';">
+        List of Employees
+    </button>
+
+</body>
