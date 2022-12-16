@@ -95,11 +95,50 @@ app.get('/location/delete/:lid', (req, res) => {
             }
         })
         .catch((error) => {
-            //If an ER_ROW_IS_REFERENCED_2 error occurs means that there is a employee referencing that particular dept 
+            //If an ER_ROW_IS_REFERENCED_2 error occurs means that there is a department referencing that particular location 
             if (error.code == "ER_ROW_IS_REFERENCED_2") {
                 res.send("<h2>Location ID: " + req.params.lid + " cannot be deleted as there a department in this location.</h2>" + "<a href='/'>Home</a>")
             }
             console.log(error)
+        })
+})
+
+//http://localhost:3004/employeeDepartment - Gets all employees and the dept they are in and lists in listEmployeeDept.ejs
+app.get('/employeeDepartment', (req, res) => {
+    mySqlDAO.getEmployeeDept()
+        .then((result) => {
+            res.render('listEmployeeDept', { employeeDeptList: result })
+        })
+        .catch((error) => {
+            res.send(error)
+        })
+})
+
+//Shows employeeDepartment update ejs
+app.get('/employeeDepartment/update/:eid', (req, res) => {
+    mySqlDAO.updateEmployeeDept(req.params.eid)
+        .then((result) => {
+            res.render('updateEmployeeDept',{ updateEmployeeDept: result })
+        })
+        .catch((error) => {
+            console.log(error)
+
+        })
+})
+
+//Updates mySQL data
+app.post('/employeeDepartment/update/:eid', (req, res) => {
+    mySqlDAO.updateEmployeeDeptData(req.body.eid, req.body.did)
+        .then((result) => {
+            res.redirect("/employeeDepartment")
+        })
+        .catch((error) => {
+            //console.log(error)
+            if (error.code == "ER_NO_REFERENCED_ROW_2") {
+                res.send("<h1>Department: " + req.body.did + " does not exist!</h1>" + "<a href='/'>Home</a>")
+            } else {
+                res.send(error.message)
+            }
         })
 })
 

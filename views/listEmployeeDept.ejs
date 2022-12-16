@@ -1,0 +1,40 @@
+<style>
+    table,
+    th,
+    td {
+        border: 2px solid black;
+        border-collapse: separate;
+    }
+</style>
+
+<table>
+    <h1>Employee's department</h1>
+    <th>Employee ID</th>
+    <th>Department</th>
+    <th>Update</th>
+    </tr>
+    <!--Loops over all employees and displays them-->
+    <% employeeDeptList.forEach((employeeDeptList)=>
+        { %>
+        <tr>
+            <td>
+                <%= employeeDeptList.eid %>
+            </td>
+            <td>
+                <%= employeeDeptList.did %>
+            </td>
+            <td>
+                <!--Does a get request including employee id-->
+                <a href="/employeeDepartment/update/<%= employeeDeptList.eid %>">
+                    <p type="submit">Update</p>
+                </a>
+            </td>
+        </tr>
+        <% }) %>
+</table>
+
+<br>
+
+<button onclick="window.location.href='http://localhost:3004/';">
+    Home
+</button>

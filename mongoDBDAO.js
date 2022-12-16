@@ -3,6 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 var db;
 var coll;
 
+//Connects to mongosh and getting the employeesdb database and using employees collection
 MongoClient.connect('mongodb://localhost:27017')
     .then((client) => {
         db = client.db('employeesDB')
@@ -12,6 +13,7 @@ MongoClient.connect('mongodb://localhost:27017')
         console.log(error.message)
     })
 
+//Getting all employees
 function getEmployeesMongoDB() {
     return new Promise((resolve, reject) => {
         cursor = coll.find()
@@ -25,6 +27,7 @@ function getEmployeesMongoDB() {
     })
 }
 
+//Adding employee
 var addEmployees = function (_id, phone, email) {
     return new Promise((resolve, reject) => {
         coll.insertOne({ "_id": _id, "phone": phone, "email": email })
@@ -37,6 +40,7 @@ var addEmployees = function (_id, phone, email) {
     })
 }
 
+//Deleting employee
 var deleteEmployees = function (_id) {
     return new Promise((resolve, reject) => {
         coll.deleteOne({ "_id": _id })
@@ -49,4 +53,5 @@ var deleteEmployees = function (_id) {
     })
 }
 
+//Exporting functions
 module.exports = { getEmployeesMongoDB, addEmployees, deleteEmployees }

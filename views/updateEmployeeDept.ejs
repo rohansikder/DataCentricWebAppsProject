@@ -1,0 +1,27 @@
+<body>
+    <h1>Edit Employee Department</h1>
+
+    <ul>
+        <li>Employee ID is not editable</li><!--Works-->
+        <li>Department ID must be valid.</li><!--Works-->
+        <li>Department ID must 3 Characters.</li><!--Works-->
+    </ul>
+
+</body>
+<!--A form that gets employee info with a get request to populate form and then does a post to return all new info-->
+<form href="http://localhost:3004/employeeDepartment/update/<%= updateEmployeeDept[0].eid %>" method="POST">
+    <b><label>Employee ID:</label></b>
+    <input type="text" readonly="true" name="eid" value="<%= updateEmployeeDept[0].eid%>" required></input>
+    <b><label>Department ID:</label></b>
+    <input type="text" name="did" value="<%= updateEmployeeDept[0].did %>" min="3" required></input>
+    <input type="submit" value="Update">
+</form>
+
+<p></p>
+<button onclick="window.location.href='http://localhost:3004/';">
+    Home
+</button>
+<p></p>
+<button onclick="window.location.href='http://localhost:3004/employeeDepartment';">
+    Employee's Department
+</button>

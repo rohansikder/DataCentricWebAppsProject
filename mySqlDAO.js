@@ -2,6 +2,7 @@ var mysql = require('promise-mysql');
 
 var pool;
 
+//Creating mysql pool and connecting to database
 mysql.createPool({
     connectionLimit: 3,
     host: 'localhost',
@@ -41,10 +42,41 @@ var getEmployees = function () {
     })
 }
 
-//Gets all Employees
+//Gets all Locations
 var getLocations = function () {
     return new Promise((resolve, reject) => {
         pool.query('select * from location')
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Gets all employee dept
+var getEmployeeDept = function () {
+    return new Promise((resolve, reject) => {
+        pool.query('select * from emp_dept')
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+//Chooses employee to populate form to edit details
+var updateEmployeeDept = function (eid) {
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'select * from emp_dept where eid=?',
+            values: [eid]
+        }
+
+        pool.query(mySqlQuery)
             .then((data) => {
                 resolve(data)
             })
@@ -126,6 +158,25 @@ var updateEmployeeData = function (eid, ename, role, salary) {
     })
 }
 
+//Edits employee dept which user has entered
+var updateEmployeeDeptData = function (eid, did) {
+    return new Promise((resolve, reject) => {
+        var mySqlQuery = {
+            sql: 'update emp_dept set did = ? where eid = ?',
+            values: [did,eid]
+        }
+
+        pool.query(mySqlQuery)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+
 //Deletes department by the did
 var deleteDepartment = function (did) {
     return new Promise((resolve, reject) => {
@@ -162,4 +213,4 @@ var checkEmployeeID = function (eid){
 }
 
 //Exporting all functions
-module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation};
+module.exports = { getDepartments, getEmployees, updateEmployee, updateEmployeeData, deleteDepartment, checkEmployeeID, getLocations, addLocation, deleteLocation, getEmployeeDept, updateEmployeeDept, updateEmployeeDeptData};
